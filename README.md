@@ -11,4 +11,5 @@ source = [nucleon0B]
 result = Correlator_J(sink, source)
 
 for i, x in enumerate(result):
-    print(f"Diagram Number:{i + 1} ", x[0], x[1])
+
+ print(f"Diagram Number:{i + 1} ", x[0], x[1])
