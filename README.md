@@ -44,7 +44,7 @@ In general, to obtain the unsimplified Wick contractions, use small letters for 
 
 Examples:
 
-#######################################################################################################
+####################################################################################
 
 
 To obtain the contractions for $N^+ \Pi^-$ at the sink and $\bar N^0$ at the source, i.e. $< N^+ \Pi^- \bar N^0>$, we define:
@@ -70,7 +70,7 @@ for i, x in enumerate(result):
 
 
 ```
-#######################################################################################################
+####################################################################################
 
 
 To obtain the contractions for $\Delta^{++} \Pi^-$ at the sink and $\bar\Delta^+$ at the source, i.e. $<\Delta^{++} \Pi^- \bar\Delta^+>$, we define:
@@ -99,7 +99,7 @@ for i, x in enumerate(resultx):
 ```
 
 
-#######################################################################################################
+####################################################################################
 
 
 To obtain the contractions for $\Delta^{++}~ N^0 ~ \Pi^-$ at the sink and $\bar\Delta^{+} ~ \bar N^0 ~ \bar\Pi^0$ at the source, i.e. $<\Delta^{++} ~N^0 ~\Pi^- ~\bar\Delta^{+} ~\bar N^0 ~\bar\Pi^0>$, we define:
