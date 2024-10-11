@@ -102,7 +102,7 @@ for i, x in enumerate(resultx):
 #######################################################################################################
 
 
-To obtain the contractions for $\Delta^{++} ~N^0 \Pi^-$ at the sink and $\bar\Delta^{+} ~\bar N^0 \bar\Pi^0$ at the source, i.e. $<\Delta^{++} ~N^0 ~\Pi^- ~\bar\Delta^{+} ~\bar N^0 ~\bar\Pi^0>$, we define:
+To obtain the contractions for $\Delta^{++}~N^0~\Pi^-$ at the sink and $\bar\Delta^{+}~\bar N^0~\bar\Pi^0$ at the source, i.e. $<\Delta^{++} ~N^0 ~\Pi^- ~\bar\Delta^{+} ~\bar N^0 ~\bar\Pi^0>$, we define:
 
 
 ```python
