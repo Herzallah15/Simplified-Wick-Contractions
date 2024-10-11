@@ -28,8 +28,9 @@ for i, x in enumerate(result):
 
 
 
-(
-sgn(number): provides the signs at the sink and source)
+[
+sgn(number): provides the signs at the sink and source
+]
 
 
 ######
