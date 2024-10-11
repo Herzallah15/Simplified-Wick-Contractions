@@ -1,9 +1,13 @@
 # Simplified-Wick-Contractions
 
-#To obtain the unsimplified Wick contractions, use small letters for the names of the hadrons. The Wick contractions are then obtained from the function "Correlator_J"
+To obtain the unsimplified Wick contractions, use small letters for the names of the hadrons. The Wick contractions are then obtained from the function "Correlator_J"
 
-#For example, to obtain the contractions for $N^+ \Pi^-$ at the sink and $\bar N^0$ at the source, i.e. $< N^+ \Pi^- \bar N^0>$, we define:
+For example, to obtain the contractions for $N^+ \Pi^-$ at the sink and $\bar N^0$ at the source, i.e. $< N^+ \Pi^- \bar N^0>$, we define:
 
+Here are some informations about the definitions used in our code:
+up-quark =  1, \bar up-quark = 1.2
+down-quark =  2, \bar down-quark = 2.2
+strange-quark =  3, \bar strange-quark = 3.2
 
 #To define a baryon operator we use the definitions given in equation (4.77) in spectroscopy.pdf. In the definition we do not include the d coefficients. However, during the simplification, the code makes use of the relations between them. Hence, a proton is defined as: nucleonp = [1, [1, 1, 2]], where the first element in the list corresponds to the overall factor. If we want to use the code with simplification, we have to use another definition for the proton, namely as: Nucleonp = ["n", nucleonp], wheren the role of "n" is to tell the code it should use for the simplification the equation: $d_{\alpha \beta \gamma}^N = d_{\beta \alpha \gamma}^N$.
 
