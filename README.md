@@ -38,7 +38,7 @@ down-quark =  2, \bar down-quark = 2.2
 strange-quark =  3, \bar strange-quark = 3.2
 
 
-To define a baryon operator we use the definitions given in equation (4.77) in spectroscopy.pdf. In the definition we do not include the d coefficients. However, during the simplification, the code makes use of the relations between them. Hence, a proton is defined as: nucleonp = [1, [1, 1, 2]], where the first element in the list corresponds to the overall factor. If we want to use the code with simplification, we have to use another definition for the proton, namely as: Nucleonp = ["n", nucleonp]. Wheren the role of "n" is to tell the code it should use for the simplification the equation: $d_{\alpha \beta \gamma}^N = d_{\beta \alpha \gamma}^N$.
+To define a baryon operator we use the definitions given in equation (4.77) in spectroscopy.pdf. In the definition we do not include the d coefficients. However, during the simplification, the code makes use of the relations between them. Hence, a proton is defined as: nucleonp = [1, [1, 1, 2]], where the first element in the list corresponds to the overall factor. If we want to use the code with simplification, we have to use another definition for the proton, namely as: Nucleonp = ["n", nucleonp], wheren the role of "n" is to tell the code it should use for the simplification the equation: $d_{\alpha \beta \gamma}^N = d_{\beta \alpha \gamma}^N$.
 
 
 [
