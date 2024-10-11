@@ -50,7 +50,7 @@ for i, x in enumerate(result):
 
 sink = [Nucleonp, Pim] 
 source = [Nucleon0B] 
-result = Correlator_J(sink, source)
+result = Correlator_J_S(sink, source)
 for i, x in enumerate(result):
     print(f"Diagram Number:{i + 1} ", x[0], x[1])
 
