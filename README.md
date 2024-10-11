@@ -1,9 +1,5 @@
 # Simplified-Wick-Contractions
 
-To obtain the unsimplified Wick contractions, use small letters for the names of the hadrons. The Wick contractions are then obtained from the function "Correlator_J"
-
-For example, to obtain the contractions for $N^+ \Pi^-$ at the sink and $\bar N^0$ at the source, i.e. $< N^+ \Pi^- \bar N^0>$, we define:
-
 Here are some informations about the definitions used in our code:
 
 up-quark =  1, \bar up-quark = 1.2
@@ -44,6 +40,11 @@ To define a baryon operator we use the definitions given in equation (4.77) in s
 
 #In the functions Correlator_J_S and Correlator_S we do the same as for "Correlator_J" and "Correlator" but here with simplifications using equation (4.78) in spectroscopy.pdf.
 
+
+
+In general, to obtain the unsimplified Wick contractions, use small letters for the names of the hadrons. The Wick contractions are then obtained from the function "Correlator_J"
+
+For example, to obtain the contractions for $N^+ \Pi^-$ at the sink and $\bar N^0$ at the source, i.e. $< N^+ \Pi^- \bar N^0>$, we define:
 
 
 
