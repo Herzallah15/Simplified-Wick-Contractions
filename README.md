@@ -61,10 +61,3 @@ source = [Nucleon0B]
 result = Correlator_J_S(sink, source)
 for i, x in enumerate(result):
     print(f"Diagram Number:{i + 1} ", x[0], x[1])
-
-
-
-#Here are some informations about the definitions used in our code:
-#up-quark =  1, \bar up-quark = 1.2
-#down-quark =  2, \bar down-quark = 2.2
-#strange-quark =  3, \bar strange-quark = 3.2
