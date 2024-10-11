@@ -29,10 +29,11 @@ for i, x in enumerate(result):
 
 
 [
+\newline
 sgn(number): provides the signs at the sink and source
 ]
 
 
-######
+[
 permutation_sign(permuted_elements): The quarks in a correlator are presented at some point as Permutation_0 = [[q0, 0],[q1, 1],[q2, 2],...]. At that point, the numbers of quarks are extracted and given as a listm i.e. Permutation_0 -> [0, 1, 2..]. This function calculates the overall sign of a permutation based on the order of quark numbers in the list.
 #####
