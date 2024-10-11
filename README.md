@@ -10,7 +10,7 @@ strange-quark =  3, \bar strange-quark = 3.2
 
 To define a baryon operator we use the definitions given in equation (4.77) in spectroscopy.pdf. In the definition we do not include the d coefficients. However, during the simplification, the code makes use of the relations between them. Hence, a proton is defined as: nucleonp = [1, [1, 1, 2]], where the first element in the list corresponds to the overall factor. If we want to use the code with simplification, we have to use another definition for the proton, namely as: Nucleonp = ["n", nucleonp], wheren the role of "n" is to tell the code it should use for the simplification the equation: $d_{\alpha \beta \gamma}^N = d_{\beta \alpha \gamma}^N$.
 
-To define meson operators, we use the equations given in Chapter 5 in spectroscopy.pdf. For example equation (5.26) for the eta0. A meson with a superposition is defines as [[coefficient_term_1, [flavor_structure_1]], [coefficient_term_2, [flavor_structure_2]], ...]. For example the eta0 is defined as [[1, [2.2, 2]], [1, [1.2, 1]]]
+To define meson operators, we use the equations given in Chapter 5 in spectroscopy.pdf. For example equation (5.26) for the eta0. A meson with a superposition is defined as [[coefficient_term_1, [flavor_structure_1]], [coefficient_term_2, [flavor_structure_2]], ...]. For example the eta0 is defined as [[1, [2.2, 2]], [1, [1.2, 1]]]
 
 
 
