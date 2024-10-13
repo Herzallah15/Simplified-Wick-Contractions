@@ -37,7 +37,7 @@ To define meson operators, we use the equations given in Chapter 5 in spectrosco
 
 #In the functions Correlator_J_S and Correlator_S we do the same as for "Correlator_J" and "Correlator" but here with simplifications using equation (4.78) in spectroscopy.pdf.
 
-<font size="15" CORRELATORS IN TERMS OF SINGLE-HADRON OPERATORS /font>
+# ⭐ CORRELATORS IN TERMS OF SINGLE-HADRON OPERATORS ⭐
 
 
 In general, to obtain the unsimplified Wick contractions, use small letters for the names of the hadrons. The Wick contractions are then obtained from the function "Correlator_J". To obtain the simplified Wick contractions, use a capital letter at the beginning of the names of the hadrons. The Wick contractions are then obtained from the function "Correlator_J_S". 
