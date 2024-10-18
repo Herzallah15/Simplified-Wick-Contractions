@@ -125,3 +125,10 @@ for i, x in enumerate(resultx):
     print(f"Diagram Number:{i + 1} ", x[0], x[1])
 
 ```
+
+
+
+
+
+# ⭐ CORRELATORS IN TERMS OF TWO-HADRON OPERATORS ⭐
+
