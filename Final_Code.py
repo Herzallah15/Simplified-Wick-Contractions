@@ -336,6 +336,7 @@ def convert_notation_Sink(particle_list):
     return quark_listX
 def convert_notation_Source(particle_list):
     number_of_quarks = 0
+    LSourceR = len(particle_list) - 1
     for i in particle_list:
         if i[0] in ListOfBaryons:
             number_of_quarks += 3
@@ -345,13 +346,13 @@ def convert_notation_Source(particle_list):
     zeigerM = 0
     for i in particle_list:
         if i[0] in ListOfBaryons:
-            quark_listX[zeigerM] = [i[1], 0, zeigerM + 2]
-            quark_listX[zeigerM + 1] = [i[1], 1, zeigerM + 1]
-            quark_listX[zeigerM + 2] = [i[1], 2, zeigerM]
+            quark_listX[zeigerM] = [np.abs(i[1]-LSourceR), 0, zeigerM + 2]
+            quark_listX[zeigerM + 1] = [np.abs(i[1]-LSourceR), 1, zeigerM + 1]
+            quark_listX[zeigerM + 2] = [np.abs(i[1]-LSourceR), 2, zeigerM]
             zeigerM += 3
         else:
-            quark_listX[zeigerM] = [i[1], 0, zeigerM + 1]
-            quark_listX[zeigerM + 1] = [i[1], 1, zeigerM]
+            quark_listX[zeigerM] = [np.abs(i[1]-LSourceR), 0, zeigerM + 1]
+            quark_listX[zeigerM + 1] = [np.abs(i[1]-LSourceR), 1, zeigerM]
             zeigerM += 2
     return quark_listX
 
