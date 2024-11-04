@@ -2,7 +2,7 @@
 
 
 ##All single-hadron operators are taken from spectroscopy.pdf.
-##$\Delta^{++}$
+**Δ⁺⁺**
 
 # ⭐ CORRELATORS IN TERMS OF Two-HADRON OPERATORS ⭐
 
