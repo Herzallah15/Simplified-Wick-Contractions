@@ -5,7 +5,7 @@ All single-hadron operators are taken from spectroscopy.pdf:
 
 **Δ⁺⁺** = Deltapp,
 **Δ̅⁺⁺** = DeltappB,
-**Δ̅⁺** = DeltapB,
+**Δ⁺** = Deltap,
 **Δ̅⁺** = DeltapB,
 **Δ⁰** = Delta0,
 **Δ̅⁰** = Delta0B,
@@ -23,7 +23,7 @@ All single-hadron operators are taken from spectroscopy.pdf:
 **Σ⁰** = Sigma0,
 **Σ̅⁰** = Sigma0B,
 **Σ⁻** = Sigmam,
-**Σ̅⁻** = SigmamB
+**Σ̅⁻** = SigmamB.
 
 
 **Ξ⁰** = Xi0,
@@ -36,6 +36,38 @@ All single-hadron operators are taken from spectroscopy.pdf:
 **Λ̅⁰** = Lambda0B.
 
 
+
+**Ω⁻** = Omegam,
+**Ω̅⁻** = OmegamB.
+
+
+
+**π⁺** = Pip,
+**π̅⁺** = PipB,
+**π⁰** = Pi0,
+**π̅⁰** = Pi0B,
+**π⁻** = Pim,
+**π̅⁻** = PimB.
+
+
+
+
+**η⁰** = Eta0,
+**η̅⁰** = Eta0B.
+
+
+
+**K⁺** = Kaonp,
+**K̅⁺** = KaonpB,
+**K⁻** = Kaonm,
+**K̅⁻** = KaonmB.
+
+
+
+
+
+**Φ⁰** = Phi0,
+**Φ̅⁰** = Phi0B.
 
 # ⭐ CORRELATORS IN TERMS OF Two-HADRON OPERATORS ⭐
 
