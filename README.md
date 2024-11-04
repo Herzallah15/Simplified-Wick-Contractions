@@ -1,9 +1,10 @@
 # ⭐ CORRELATORS IN TERMS OF Single-HADRON OPERATORS ⭐
 
 
-All single-hadron operators are taken from spectroscopy.pdf.
+All single-hadron operators are taken from spectroscopy.pdf:
 
-**Δ⁺⁺**
+**Δ⁺⁺** = Deltapp
+**Δ̅⁺⁺** = DeltappB
 
 # ⭐ CORRELATORS IN TERMS OF Two-HADRON OPERATORS ⭐
 
