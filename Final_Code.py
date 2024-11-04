@@ -57,6 +57,7 @@ KaonmB = [1, [2.2, 3], "M"]
 Phi0 = [1, [3.2, 3], "M"]
 Phi0B = [1, [3.2, 3], "M"]
 ListOfBaryons = ["d2", "d1", "d0", "s1", "s0", "n", "o", "l", "x"]
+listbaryon = ['s', 'n', 'd', 'o', 'l', 'x']
 ################## Definitions for the unsimplified case with two particle-operators ##################
 
 hadron_operatorsB = {'Delta': {3/2: DeltappB, 1/2: DeltapB, -1/2: Delta0B, -3/2: DeltamB},
@@ -9726,7 +9727,36 @@ def two_pair_simplifying(location, simplification_pair_1, simplification_pair_2,
                         Simplified_Result0[jY][1] = 0
         Simplified_Result = [item for item in Simplified_Result0 if item != [0, 0]]
         return Simplified_Result
-
+def Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign):
+    Simplified_Result0 = copy.deepcopy(result_to_simplify_F)
+    lenR = len(result_to_simplify_F)
+    for jX in range(lenR):
+        for jY in range(lenR):
+            if jX < jY:
+                re_construct = []
+                for jZ in result_to_simplify_F[jY][0]:
+                    recN1 = []
+                    recN2 = []
+                    if (jZ[0][0] == location) and (jZ[0][1] == hadron1):
+                        recN1 = [location, hadron2, jZ[0][2]]
+                    elif (jZ[0][0] == location) and (jZ[0][1] == hadron2):
+                        recN1 = [location, hadron1, jZ[0][2]]
+                    else:
+                        recN1 = jZ[0]
+#
+                    if (jZ[1][0] == location) and (jZ[1][1] == hadron1):
+                        recN2 = [location, hadron2, jZ[1][2]]
+                    elif (jZ[1][0] == location) and (jZ[1][1] == hadron2):
+                        recN2 = [location, hadron1, jZ[1][2]]
+                    else:
+                        recN2 = jZ[1]
+                    re_construct.append([recN1, recN2])
+                if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                    Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                    Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                    Simplified_Result0[jY][1] = 0
+    Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+    return Simplified_Result
 
 ########################################################
 
@@ -9899,6 +9929,8 @@ def Wick_Contractions(senken0, quelle0):
     lenR = len(quelleM)
     number_of_correlators = lenL * lenR
     Total_Wick_Converted = [0 for i in range(number_of_correlators)]
+    F_S_S_L = [0 for i in range(number_of_correlators)]
+    F_S_So_L = [0 for i in range(number_of_correlators)]
     zeiger = 0
     for i in range(lenL):
         for j in range(lenR):
@@ -9908,6 +9940,26 @@ def Wick_Contractions(senken0, quelle0):
             input_source = remove_flavor(source1)
             particles_at_the_sink = specify_flavor(sink1)
             particles_at_the_source = specify_flavor(source1)
+            Final_Simplification_Sink_List = []
+            Final_Simplification_Source_List = []
+            for sF in particles_at_the_sink:
+                if (sF[0] == 's1') or (sF[0] == 's0'):
+                    Final_Simplification_Sink_List.append(['s', sF[1]])
+                elif (sF[0] == 'd0') or (sF[0] == 'd1') or (sF[0] == 'd2'):
+                    Final_Simplification_Sink_List.append(['d', sF[1]])
+                else:
+                    Final_Simplification_Sink_List.append([sF[0], sF[1]])
+            F_S_S_L[zeiger] = Final_Simplification_Sink_List
+#
+            for sF in particles_at_the_source:
+                if (sF[0] == 's1') or (sF[0] == 's0'):
+                    Final_Simplification_Source_List.append(['s', sF[1]])
+                elif (sF[0] == 'd0') or (sF[0] == 'd1') or (sF[0] == 'd2'):
+                    Final_Simplification_Source_List.append(['d', sF[1]])
+                else:
+                    Final_Simplification_Source_List.append([sF[0], sF[1]])
+            F_S_So_L[zeiger] = Final_Simplification_Source_List
+#
             result_to_simplify = copy.deepcopy(Correlator_S(sink1, source1))
 
              ######## NOW WE DO THE SIMPLIFICATION (pairs are still not simultaneously simplified) ########
@@ -10058,14 +10110,109 @@ def Wick_Contractions(senken0, quelle0):
 
     Converted_Results_Final = [item for item in Converted_Results_Final0 if item != [0, 0]]
                     
-    return Converted_Results_Final
+    result_to_simplify_F = copy.deepcopy(Converted_Results_Final)
 
+    # Now we do the last simplification (identical hadrons):
+    #I: At the sink:######################################################################### 
+    zX = 0
+    for i, iL in enumerate(F_S_S_L):
+        for j, jL in enumerate(F_S_S_L):
+            if (i != j) and (iL != jL):
+                zX = -1
+    if zX == 0:
+        location = 1
+        sp0 = F_S_S_L[0]
+        if len(sp0) == 2:
+            if sp0[0][0] == sp0[1][0]:
+                if sp0[0][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = sp0[0][1]
+                hadron2 = sp0[1][1]
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+        if len(sp0) == 3:
+            #01
+            if sp0[0][0] == sp0[1][0]:
+                if sp0[0][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = sp0[0][1]
+                hadron2 = sp0[1][1]
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+            #02
+            if sp0[0][0] == sp0[2][0]:
+                if sp0[0][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = sp0[0][1]
+                hadron2 = sp0[2][1]
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+            #12
+            if sp0[1][0] == sp0[2][0]:
+                if sp0[1][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = sp0[1][1]
+                hadron2 = sp0[2][1]
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+
+    zX1 = 0
+    for i, iL in enumerate(F_S_So_L):
+        for j, jL in enumerate(F_S_So_L):
+            if (i != j) and (iL != jL):
+                zX1 = -1
+    if zX1 == 0:
+        sp0 = F_S_So_L[0]
+        tB = len(sp0) - 1
+        location = 0
+        if len(sp0) == 2:
+            if sp0[0][0] == sp0[1][0]:
+                if sp0[0][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = np.abs(tB-sp0[0][1])
+                hadron2 = np.abs(tB-sp0[1][1])
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+        if len(sp0) == 3:
+            #01
+            if sp0[0][0] == sp0[1][0]:
+                if sp0[0][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = np.abs(tB-sp0[0][1])
+                hadron2 = np.abs(tB-sp0[1][1])
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+            #02
+            if sp0[0][0] == sp0[2][0]:
+                if sp0[0][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = np.abs(tB-sp0[0][1])
+                hadron2 = np.abs(tB-sp0[2][1])
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+            #12
+            if sp0[1][0] == sp0[2][0]:
+                if sp0[1][0] in listbaryon:
+                    relativ_sign = -1
+                else:
+                    relativ_sign = 1
+                hadron1 = np.abs(tB-sp0[1][1])
+                hadron2 = np.abs(tB-sp0[2][1])
+                result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
+
+    return result_to_simplify_F
 
 
 def Simplify_Overall(resultH, x):
     resultHNew = [[i[0], i[1] / x] for i in resultH]
     return resultHNew
-
 
 ########################################################
 
@@ -10235,8 +10382,10 @@ def Wick_Contractions_Symbolic(senken0, quelle0):
 #two_hadron_operator([1/2, 3/2], 1/2, 1/2, 'Nucleon', 'Delta')
 #Sink = [two_hadron_operator([1/2, 1/2], 1, 0, 'Nucleon', 'Nucleon')]
 #Source = [two_hadron_operatorB([1/2, 1/2], 1, 0, 'Nucleon', 'Nucleon')]
-Sink = [Nucleonp, Sigma0]
-Source = [Sigma0B, NucleonpB]
+#Sink = [Nucleonp, Sigma0]
+#Source = [Sigma0B, NucleonpB]
+Sink = [two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')]
+Source = [two_hadron_operatorB([1, 1], 0, 0, 'Sigma', 'Sigma')]
 result = Wick_Contractions(Sink, Source)
 simplified_result = Simplify_Overall(result, 1)
 for i, x in enumerate(simplified_result):
