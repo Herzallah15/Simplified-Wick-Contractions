@@ -91,7 +91,12 @@ All two-hadron operators are also taken from spectroscopy.pdf (from section 7.2)
 
 
 
-4-The two-hadron operator (in \bar) is given now by: two_hadron_operatorB(rep, **I**, **I3**, **A**, **B**), without \bar: two_hadron_operator(rep, **I**, **I3**, **A**, **B**)
+4-The two-hadron operator (in \bar) is given now by: two_hadron_operatorB(rep, **I**, **I3**, **A**, **B**).
 
+
+
+
+
+5-The two-hadron operator without \bar: two_hadron_operator(rep, **I**, **I3**, **A**, **B**).
 
 # ⭐ THREE-HADRON OPERATORS ⭐
