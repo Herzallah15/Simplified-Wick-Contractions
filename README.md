@@ -75,5 +75,23 @@ All single-hadron operators are taken from spectroscopy.pdf (page 163 for Baryon
 
 All two-hadron operators are also taken from spectroscopy.pdf (from section 7.2). To specify the two-hadron operator we always need to specify:
 
-The representation: ***I<sub>A</sub> × I<sub>B</sub>*** = [***I<sub>A</sub>***, ***I<sub>B</sub>***] = rep. The order of ***I<sub>A</sub>***  and ***I<sub>B</sub>*** must be taken exactly as given in spectroscopy.pdf-section 7.2.
+1- The representation: **I<sub>A</sub> × I<sub>B</sub>** = [**I<sub>A</sub>**, **I<sub>B</sub>**] = rep. The order of **I<sub>A</sub>**  and **I<sub>B</sub>** must be taken exactly as given in spectroscopy.pdf-section 7.2.
+
+
+
+
+2- The total isospin **I** and the third component, **I3**.
+
+
+
+
+
+3-The particles **A**, **B** **∈** {'Delta', 'Nucleon', 'Sigma', 'Xi', 'Lambda', 'Omega', 'Pi', 'Eta', 'Kaon', 'KaonB','Phi'}.
+
+
+
+
+4-The two-hadron operator (in \bar) is given now by: two_hadron_operatorB(rep, **I**, **I3**, **A**, **B**), without \bar: two_hadron_operator(rep, **I**, **I3**, **A**, **B**)
+
+
 # ⭐ THREE-HADRON OPERATORS ⭐
