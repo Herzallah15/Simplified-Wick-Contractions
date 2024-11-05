@@ -1,4 +1,4 @@
-# ⭐ CORRELATORS IN TERMS OF SINGLE-HADRON OPERATORS ⭐
+# ⭐ SINGLE-HADRON OPERATORS ⭐
 
 
 All single-hadron operators are taken from spectroscopy.pdf:
@@ -69,6 +69,6 @@ All single-hadron operators are taken from spectroscopy.pdf:
 **Φ⁰** = Phi0,
 **Φ̅⁰** = Phi0B.
 
-# ⭐ CORRELATORS IN TERMS OF TWO-HADRON OPERATORS ⭐
+# ⭐ TWO-HADRON OPERATORS ⭐
 
-# ⭐ CORRELATORS IN TERMS OF THREE-HADRON OPERATORS ⭐
+# ⭐ THREE-HADRON OPERATORS ⭐
