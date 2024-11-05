@@ -135,7 +135,7 @@ All three-hadron operators were derived by Fernando Alvarado. To specify the thr
 
 
 
-# ⭐ Wick Contractions ⭐
+# ⭐ WICK CONTRACTIONS ⭐
 
 
 The Wick contractions are obtaiend by: Wick_Contractions(Sink, Source).
