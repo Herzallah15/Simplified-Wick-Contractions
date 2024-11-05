@@ -80,7 +80,7 @@ All two-hadron operators are also taken from spectroscopy.pdf (from section 7.2)
 
 
 
-2- The total isospin **I** and the third component **I3**.
+2- The total isospin (**I**) and the third component (**I3**).
 
 
 
@@ -112,7 +112,7 @@ All three-hadron operators were derived by Fernando Alvarado. To specify the thr
 
 
 
-2- The total isospin **I**, the third component **I3** and the total isospin of **A** and **B** **I<sub>AB</sub>**.
+2- The total isospin (**I**), the third component (**I3**) and the total isospin of **A** and **B** (**I<sub>AB</sub>**).
 
 
 
