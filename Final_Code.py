@@ -10377,18 +10377,12 @@ def Wick_Contractions_Symbolic(senken0, quelle0):
 
 ##
 ########################################################
-#8: Examples
 #three_hadron_operator([3/2, 3/2, 3/2], 5/2, 3/2, 1, 'Delta', 'Delta', 'Delta')
-#two_hadron_operator([1/2, 3/2], 1/2, 1/2, 'Nucleon', 'Delta')
-#Sink = [two_hadron_operator([1/2, 1/2], 1, 0, 'Nucleon', 'Nucleon')]
-#Source = [two_hadron_operatorB([1/2, 1/2], 1, 0, 'Nucleon', 'Nucleon')]
-#Sink = [Nucleonp, Sigma0]
-#Source = [Sigma0B, NucleonpB]
-Sink = [two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')]
-Source = [two_hadron_operatorB([1, 1], 0, 0, 'Sigma', 'Sigma')]
+#two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')
+#Sink = [three_hadron_operator([1, 1, 3/2], 5/2, 5/2, 1, 'Pi', 'Pi', 'Delta')]
+#Source = [three_hadron_operatorB([1, 1, 3/2], 5/2, 5/2, 1, 'Pi', 'Pi', 'Delta')]
+Sink = [Lambda0, Lambda0]
+Source = [Lambda0B, Lambda0B]
 result = Wick_Contractions(Sink, Source)
-simplified_result = Simplify_Overall(result, 1)
-for i, x in enumerate(simplified_result):
+for i, x in enumerate(result):
     print(f"D.Nr:{i + 1} ", x[0], x[1])
-
-
