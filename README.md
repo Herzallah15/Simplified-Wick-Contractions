@@ -1,7 +1,7 @@
 # ⭐ SINGLE-HADRON OPERATORS ⭐
 
 
-All single-hadron operators are taken from spectroscopy.pdf:
+All single-hadron operators are taken from spectroscopy.pdf (page 163 for Baryons):
 
 **Δ⁺⁺** = Deltapp,
 **Δ̅⁺⁺** = DeltappB,
@@ -71,4 +71,9 @@ All single-hadron operators are taken from spectroscopy.pdf:
 
 # ⭐ TWO-HADRON OPERATORS ⭐
 
+
+
+All two-hadron operators are also taken from spectroscopy.pdf (from section 7.2). To specify the two-hadron operator we always need to specify:
+
+***I<sub>A</sub>***
 # ⭐ THREE-HADRON OPERATORS ⭐
