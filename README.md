@@ -130,3 +130,78 @@ All three-hadron operators were derived by Fernando Alvarado. To specify the thr
 
 
 5-The three-hadron operator without \bar: three_hadron_operator(rep, **I**, **I3**, **I<sub>AB</sub>**, **A**, **B**, **C**).
+
+
+
+
+
+# ⭐ Wick Contractions ⭐
+
+
+The Wick contractions are obtaiend by: Wick_Contractions(Sink, Source).
+
+One only needs to specify the Sink and Source. In general, the Sink and Source can be any combination of single-, two-, and three-hadron operators.
+
+Here are some examples:
+
+
+
+
+Sink = [Nucleonp, Delta0, Pip]
+
+
+
+
+
+Source = [DeltappB, Nucleon0B]
+
+
+
+#
+
+Sink = [two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')]
+
+
+
+
+
+Source = [two_hadron_operatorB([1, 1], 0, 0, 'Sigma', 'Sigma')]
+
+
+#
+
+Sink = [Lambda0, Lambda0]
+
+
+
+
+
+
+
+Source = [Lambda0B, Lambda0B]
+
+
+
+#
+
+Sink = [Lambda0, two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')]
+
+
+
+
+
+
+
+Source = [two_hadron_operatorB([1, 1], 0, 0, 'Sigma', 'Sigma'), Lambda0B]
+
+#
+
+Sink = [three_hadron_operator([1, 1, 3/2], 5/2, 5/2, 1, 'Pi', 'Pi', 'Delta')]
+
+
+
+
+
+
+
+Source = [three_hadron_operatorB([1, 1, 3/2], 5/2, 5/2, 1, 'Pi', 'Pi', 'Delta')]
