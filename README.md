@@ -80,7 +80,7 @@ All two-hadron operators are also taken from spectroscopy.pdf (from section 7.2)
 
 
 
-2- The total isospin **I** and the third component, **I3**.
+2- The total isospin **I** and the third component **I3**.
 
 
 
@@ -99,4 +99,34 @@ All two-hadron operators are also taken from spectroscopy.pdf (from section 7.2)
 
 5-The two-hadron operator without \bar: two_hadron_operator(rep, **I**, **I3**, **A**, **B**).
 
+
 # ⭐ THREE-HADRON OPERATORS ⭐
+
+
+
+
+All three-hadron operators were derived by Fernando Alvarado. To specify the three-hadron operator we always need to specify:
+
+1- The representation: **I<sub>A</sub> × I<sub>B</sub> × I<sub>C</sub>** = [**I<sub>A</sub>**, **I<sub>B</sub>**, **I<sub>C</sub>**] = rep. The order of **I<sub>A</sub>**, **I<sub>B</sub>** and **I<sub>C</sub>** must be taken exactly as specifed by Fernando Alvarado.
+
+
+
+
+2- The total isospin **I**, the third component **I3** and the total isospin of **A** and **B** **I<sub>AB</sub>**.
+
+
+
+
+
+3-The particles **A**, **B**, **C** **∈** {'Delta', 'Nucleon', 'Sigma', 'Xi', 'Lambda', 'Omega', 'Pi', 'Eta', 'Kaon', 'KaonB','Phi'}.
+
+
+
+
+4-The three-hadron operator (in \bar) is given now by: three_hadron_operatorB(rep, **I**, **I3**, **I<sub>AB</sub>**, **A**, **B**, **C**).
+
+
+
+
+
+5-The three-hadron operator without \bar: three_hadron_operator(rep, **I**, **I3**, **I<sub>AB</sub>**, **A**, **B**, **C**).
