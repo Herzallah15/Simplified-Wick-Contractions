@@ -69,6 +69,14 @@ All single-hadron operators are taken from spectroscopy.pdf (page 163 for Baryon
 **Φ⁰** = Phi0,
 **Φ̅⁰** = Phi0B.
 
+
+
+
+
+**σ⁰** = sig0,
+**σ̅** = sig0B.
+
+
 # ⭐ TWO-HADRON OPERATORS ⭐
 
 
