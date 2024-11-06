@@ -10111,7 +10111,7 @@ def Wick_Contractions(senken0, quelle0):
     Converted_Results_Final = [item for item in Converted_Results_Final0 if item != [0, 0]]
                     
     result_to_simplify_F = copy.deepcopy(Converted_Results_Final)
-
+    '''
     # Now we do the last simplification (identical hadrons):
     #I: At the sink:######################################################################### 
     zX = 0
@@ -10206,7 +10206,7 @@ def Wick_Contractions(senken0, quelle0):
                 hadron1 = np.abs(tB-sp0[1][1])
                 hadron2 = np.abs(tB-sp0[2][1])
                 result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
-
+    '''
     return result_to_simplify_F
 
 
