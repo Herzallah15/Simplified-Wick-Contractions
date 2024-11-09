@@ -9760,6 +9760,627 @@ def Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign):
     Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
     return Simplified_Result
 
+
+
+
+########################################################
+
+
+##
+########################################################
+#4: For Simplification II
+
+
+def Sim_KD(HQ_List, result_to_simplify_F, relativ_sign):
+    Simplified_Result0 = copy.deepcopy(result_to_simplify_F)
+    lenR = len(result_to_simplify_F)
+    #One Hadron To Simplify
+    if len(HQ_List) == 1:
+        #H1
+        location = HQ_List[0][0]
+        hadron = HQ_List[0][1]
+        q1 = HQ_List[0][2][0]
+        q2 = HQ_List[0][2][1]
+        for jX in range(lenR):
+            for jY in range(lenR):
+                if jX < jY:
+                    re_construct = []
+                    for jZ in result_to_simplify_F[jY][0]:
+                        recN1 = []
+                        recN2 = []
+                        #H1_NB
+                        if (jZ[0][0] == location) and (jZ[0][1] == hadron) and (jZ[0][2] == q1):
+                            recN1 = [location, hadron, q2]
+                        elif (jZ[0][0] == location) and (jZ[0][1] == hadron) and (jZ[0][2] == q2):
+                            recN1 = [location, hadron, q1]
+                        else:
+                            recN1 = jZ[0]
+                        #H1-B
+                        if (jZ[1][0] == location) and (jZ[1][1] == hadron) and (jZ[1][2] == q1):
+                            recN2 = [location, hadron, q2]
+                        elif (jZ[1][0] == location) and (jZ[1][1] == hadron) and (jZ[1][2] == q2):
+                            recN2 = [location, hadron, q1]
+                        else:
+                            recN2 = jZ[1]
+                        re_construct.append([recN1, recN2])
+                    if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                        Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                        Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                        Simplified_Result0[jY][1] = 0
+        Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+        return Simplified_Result
+    #Two Hadrons To Simplify
+    if len(HQ_List) == 2:
+        #H1
+        location1 = HQ_List[0][0]
+        hadron1 = HQ_List[0][1]
+        q1 = HQ_List[0][2][0]
+        q2 = HQ_List[0][2][1]
+        #H2
+        location2 = HQ_List[1][0]
+        hadron2 = HQ_List[1][1]
+        p1 = HQ_List[1][2][0]
+        p2 = HQ_List[1][2][1]
+        for jX in range(lenR):
+            for jY in range(lenR):
+                if jX < jY:
+                    re_construct = []
+                    for jZ in result_to_simplify_F[jY][0]:
+                        recN1 = []
+                        recN2 = []
+                        #H1_NB
+                        if (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q1):
+                            recN1 = [location1, hadron1, q2]
+                        elif (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q2):
+                            recN1 = [location1, hadron1, q1]
+                        #H2_NB
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p1):
+                            recN1 = [location2, hadron2, p2]
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p2):
+                            recN1 = [location2, hadron2, p1]
+                        else:
+                            recN1 = jZ[0]
+                        #
+                        #H1_B
+                        if (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q1):
+                            recN2 = [location1, hadron1, q2]
+                        elif (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q2):
+                            recN2 = [location1, hadron1, q1]
+                        #H2_B
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p1):
+                            recN2 = [location2, hadron2, p2]
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p2):
+                            recN2 = [location2, hadron2, p1]
+                        else:
+                            recN2 = jZ[1]
+                        re_construct.append([recN1, recN2])
+                    if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                        Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                        Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                        Simplified_Result0[jY][1] = 0
+        Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+        return Simplified_Result
+    #Three Hadrons To Simplify
+    if len(HQ_List) == 3:
+        #H1
+        location1 = HQ_List[0][0]
+        hadron1 = HQ_List[0][1]
+        q1 = HQ_List[0][2][0]
+        q2 = HQ_List[0][2][1]
+        #H2
+        location2 = HQ_List[1][0]
+        hadron2 = HQ_List[1][1]
+        p1 = HQ_List[1][2][0]
+        p2 = HQ_List[1][2][1]
+        #H3
+        location3 = HQ_List[2][0]
+        hadron3 = HQ_List[2][1]
+        r1 = HQ_List[2][2][0]
+        r2 = HQ_List[2][2][1]
+        for jX in range(lenR):
+            for jY in range(lenR):
+                if jX < jY:
+                    re_construct = []
+                    for jZ in result_to_simplify_F[jY][0]:
+                        recN1 = []
+                        recN2 = []
+                        #H1_NB
+                        if (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q1):
+                            recN1 = [location1, hadron1, q2]
+                        elif (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q2):
+                            recN1 = [location1, hadron1, q1]
+                        #H2_NB
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p1):
+                            recN1 = [location2, hadron2, p2]
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p2):
+                            recN1 = [location2, hadron2, p1]
+                        #H3_NB
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r1):
+                            recN1 = [location3, hadron3, r2]
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r2):
+                            recN1 = [location3, hadron3, r1]
+                        else:
+                            recN1 = jZ[0]
+                        #
+                        #H1_B
+                        if (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q1):
+                            recN2 = [location1, hadron1, q2]
+                        elif (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q2):
+                            recN2 = [location1, hadron1, q1]
+                        #H2_B
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p1):
+                            recN2 = [location2, hadron2, p2]
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p2):
+                            recN2 = [location2, hadron2, p1]
+                        #H3_B
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r1):
+                            recN2 = [location3, hadron3, r2]
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r2):
+                            recN2 = [location3, hadron3, r1]
+                        else:
+                            recN2 = jZ[1]
+                        re_construct.append([recN1, recN2])
+                    if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                        Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                        Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                        Simplified_Result0[jY][1] = 0
+        Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+        return Simplified_Result
+    #Four Hadrons To Simplify
+    if len(HQ_List) == 4:
+        #H1
+        location1 = HQ_List[0][0]
+        hadron1 = HQ_List[0][1]
+        q1 = HQ_List[0][2][0]
+        q2 = HQ_List[0][2][1]
+        #H2
+        location2 = HQ_List[1][0]
+        hadron2 = HQ_List[1][1]
+        p1 = HQ_List[1][2][0]
+        p2 = HQ_List[1][2][1]
+        #H3
+        location3 = HQ_List[2][0]
+        hadron3 = HQ_List[2][1]
+        r1 = HQ_List[2][2][0]
+        r2 = HQ_List[2][2][1]
+        #H4
+        location4 = HQ_List[3][0]
+        hadron4 = HQ_List[3][1]
+        z1 = HQ_List[3][2][0]
+        z2 = HQ_List[3][2][1]
+        for jX in range(lenR):
+            for jY in range(lenR):
+                if jX < jY:
+                    re_construct = []
+                    for jZ in result_to_simplify_F[jY][0]:
+                        recN1 = []
+                        recN2 = []
+                        #H1_NB
+                        if (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q1):
+                            recN1 = [location1, hadron1, q2]
+                        elif (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q2):
+                            recN1 = [location1, hadron1, q1]
+                        #H2_NB
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p1):
+                            recN1 = [location2, hadron2, p2]
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p2):
+                            recN1 = [location2, hadron2, p1]
+                        #H3_NB
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r1):
+                            recN1 = [location3, hadron3, r2]
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r2):
+                            recN1 = [location3, hadron3, r1]
+                        #H4_NB
+                        elif (jZ[0][0] == location4) and (jZ[0][1] == hadron4) and (jZ[0][2] == z1):
+                            recN1 = [location4, hadron4, z2]
+                        elif (jZ[0][0] == location4) and (jZ[0][1] == hadron4) and (jZ[0][2] == z2):
+                            recN1 = [location4, hadron4, z1]
+                        else:
+                            recN1 = jZ[0]
+                        #
+                        #H1_B
+                        if (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q1):
+                            recN2 = [location1, hadron1, q2]
+                        elif (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q2):
+                            recN2 = [location1, hadron1, q1]
+                        #H2_B
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p1):
+                            recN2 = [location2, hadron2, p2]
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p2):
+                            recN2 = [location2, hadron2, p1]
+                        #H3_B
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r1):
+                            recN2 = [location3, hadron3, r2]
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r2):
+                            recN2 = [location3, hadron3, r1]
+                        #H4_B
+                        elif (jZ[1][0] == location4) and (jZ[1][1] == hadron4) and (jZ[1][2] == z1):
+                            recN2 = [location4, hadron4, z2]
+                        elif (jZ[1][0] == location4) and (jZ[1][1] == hadron4) and (jZ[1][2] == z2):
+                            recN2 = [location4, hadron4, z1]
+                        else:
+                            recN2 = jZ[1]
+                        re_construct.append([recN1, recN2])
+                    if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                        Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                        Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                        Simplified_Result0[jY][1] = 0
+        Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+        return Simplified_Result
+    #Five Hadrons To Simplify
+    if len(HQ_List) == 5:
+        #H1
+        location1 = HQ_List[0][0]
+        hadron1 = HQ_List[0][1]
+        q1 = HQ_List[0][2][0]
+        q2 = HQ_List[0][2][1]
+        #H2
+        location2 = HQ_List[1][0]
+        hadron2 = HQ_List[1][1]
+        p1 = HQ_List[1][2][0]
+        p2 = HQ_List[1][2][1]
+        #H3
+        location3 = HQ_List[2][0]
+        hadron3 = HQ_List[2][1]
+        r1 = HQ_List[2][2][0]
+        r2 = HQ_List[2][2][1]
+        #H4
+        location4 = HQ_List[3][0]
+        hadron4 = HQ_List[3][1]
+        z1 = HQ_List[3][2][0]
+        z2 = HQ_List[3][2][1]
+        #H5
+        location5 = HQ_List[4][0]
+        hadron5 = HQ_List[4][1]
+        h1 = HQ_List[4][2][0]
+        h2 = HQ_List[4][2][1]
+        for jX in range(lenR):
+            for jY in range(lenR):
+                if jX < jY:
+                    re_construct = []
+                    for jZ in result_to_simplify_F[jY][0]:
+                        recN1 = []
+                        recN2 = []
+                        #H1_NB
+                        if (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q1):
+                            recN1 = [location1, hadron1, q2]
+                        elif (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q2):
+                            recN1 = [location1, hadron1, q1]
+                        #H2_NB
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p1):
+                            recN1 = [location2, hadron2, p2]
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p2):
+                            recN1 = [location2, hadron2, p1]
+                        #H2_NB
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r1):
+                            recN1 = [location3, hadron3, r2]
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r2):
+                            recN1 = [location3, hadron3, r1]
+                        #H3_NB
+                        elif (jZ[0][0] == location4) and (jZ[0][1] == hadron4) and (jZ[0][2] == z1):
+                            recN1 = [location4, hadron4, z2]
+                        elif (jZ[0][0] == location4) and (jZ[0][1] == hadron4) and (jZ[0][2] == z2):
+                            recN1 = [location4, hadron4, z1]
+                        #H4_NB
+                        elif (jZ[0][0] == location5) and (jZ[0][1] == hadron5) and (jZ[0][2] == h1):
+                            recN1 = [location5, hadron5, h2]
+                        elif (jZ[0][0] == location5) and (jZ[0][1] == hadron5) and (jZ[0][2] == h2):
+                            recN1 = [location5, hadron5, h1]
+                        else:
+                            recN1 = jZ[0]
+                        #
+                        #H1_B
+                        if (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q1):
+                            recN2 = [location1, hadron1, q2]
+                        elif (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q2):
+                            recN2 = [location1, hadron1, q1]
+                        #H2_B
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p1):
+                            recN2 = [location2, hadron2, p2]
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p2):
+                            recN2 = [location2, hadron2, p1]
+                        #H3_B
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r1):
+                            recN2 = [location3, hadron3, r2]
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r2):
+                            recN2 = [location3, hadron3, r1]
+                        #H4_B
+                        elif (jZ[1][0] == location4) and (jZ[1][1] == hadron4) and (jZ[1][2] == z1):
+                            recN2 = [location4, hadron4, z2]
+                        elif (jZ[1][0] == location4) and (jZ[1][1] == hadron4) and (jZ[1][2] == z2):
+                            recN2 = [location4, hadron4, z1]
+                        #H5_B
+                        elif (jZ[1][0] == location5) and (jZ[1][1] == hadron5) and (jZ[1][2] == h1):
+                            recN2 = [location5, hadron5, h2]
+                        elif (jZ[1][0] == location5) and (jZ[1][1] == hadron5) and (jZ[1][2] == h2):
+                            recN2 = [location5, hadron5, h1]
+                        else:
+                            recN2 = jZ[1]
+                        re_construct.append([recN1, recN2])
+                    if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                        Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                        Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                        Simplified_Result0[jY][1] = 0
+        Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+        return Simplified_Result
+
+
+    if len(HQ_List) == 6:
+        #H1
+        location1 = HQ_List[0][0]
+        hadron1 = HQ_List[0][1]
+        q1 = HQ_List[0][2][0]
+        q2 = HQ_List[0][2][1]
+        #H2
+        location2 = HQ_List[1][0]
+        hadron2 = HQ_List[1][1]
+        p1 = HQ_List[1][2][0]
+        p2 = HQ_List[1][2][1]
+        #H3
+        location3 = HQ_List[2][0]
+        hadron3 = HQ_List[2][1]
+        r1 = HQ_List[2][2][0]
+        r2 = HQ_List[2][2][1]
+        #H4
+        location4 = HQ_List[3][0]
+        hadron4 = HQ_List[3][1]
+        z1 = HQ_List[3][2][0]
+        z2 = HQ_List[3][2][1]
+        #H5
+        location5 = HQ_List[4][0]
+        hadron5 = HQ_List[4][1]
+        h1 = HQ_List[4][2][0]
+        h2 = HQ_List[4][2][1]
+        #H6
+        location6 = HQ_List[5][0]
+        hadron6 = HQ_List[5][1]
+        Yu1 = HQ_List[5][2][0]
+        Yu2 = HQ_List[5][2][1]
+        for jX in range(lenR):
+            for jY in range(lenR):
+                if jX < jY:
+                    re_construct = []
+                    for jZ in result_to_simplify_F[jY][0]:
+                        recN1 = []
+                        recN2 = []
+                        #H1_NB
+                        if (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q1):
+                            recN1 = [location1, hadron1, q2]
+                        elif (jZ[0][0] == location1) and (jZ[0][1] == hadron1) and (jZ[0][2] == q2):
+                            recN1 = [location1, hadron1, q1]
+                        #H2_NB
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p1):
+                            recN1 = [location2, hadron2, p2]
+                        elif (jZ[0][0] == location2) and (jZ[0][1] == hadron2) and (jZ[0][2] == p2):
+                            recN1 = [location2, hadron2, p1]
+                        #H3_NB
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r1):
+                            recN1 = [location3, hadron3, r2]
+                        elif (jZ[0][0] == location3) and (jZ[0][1] == hadron3) and (jZ[0][2] == r2):
+                            recN1 = [location3, hadron3, r1]
+                        #H4_NB
+                        elif (jZ[0][0] == location4) and (jZ[0][1] == hadron4) and (jZ[0][2] == z1):
+                            recN1 = [location4, hadron4, z2]
+                        elif (jZ[0][0] == location4) and (jZ[0][1] == hadron4) and (jZ[0][2] == z2):
+                            recN1 = [location4, hadron4, z1]
+                        #H5_NB
+                        elif (jZ[0][0] == location5) and (jZ[0][1] == hadron5) and (jZ[0][2] == h1):
+                            recN1 = [location5, hadron5, h2]
+                        elif (jZ[0][0] == location5) and (jZ[0][1] == hadron5) and (jZ[0][2] == h2):
+                            recN1 = [location5, hadron5, h1]
+                        #H6_NB
+                        elif (jZ[0][0] == location6) and (jZ[0][1] == hadron6) and (jZ[0][2] == Yu1):
+                            recN1 = [location6, hadron6, Yu2]
+                        elif (jZ[0][0] == location6) and (jZ[0][1] == hadron6) and (jZ[0][2] == Yu2):
+                            recN1 = [location6, hadron6, Yu1]
+                        else:
+                            recN1 = jZ[0]
+                        #
+                        #H1_B
+                        if (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q1):
+                            recN2 = [location1, hadron1, q2]
+                        elif (jZ[1][0] == location1) and (jZ[1][1] == hadron1) and (jZ[1][2] == q2):
+                            recN2 = [location1, hadron1, q1]
+                        #H2_B
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p1):
+                            recN2 = [location2, hadron2, p2]
+                        elif (jZ[1][0] == location2) and (jZ[1][1] == hadron2) and (jZ[1][2] == p2):
+                            recN2 = [location2, hadron2, p1]
+                        #H3_B
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r1):
+                            recN2 = [location3, hadron3, r2]
+                        elif (jZ[1][0] == location3) and (jZ[1][1] == hadron3) and (jZ[1][2] == r2):
+                            recN2 = [location3, hadron3, r1]
+                        #H4_B
+                        elif (jZ[1][0] == location4) and (jZ[1][1] == hadron4) and (jZ[1][2] == z1):
+                            recN2 = [location4, hadron4, z2]
+                        elif (jZ[1][0] == location4) and (jZ[1][1] == hadron4) and (jZ[1][2] == z2):
+                            recN2 = [location4, hadron4, z1]
+                        #H5_B
+                        elif (jZ[1][0] == location5) and (jZ[1][1] == hadron5) and (jZ[1][2] == h1):
+                            recN2 = [location5, hadron5, h2]
+                        elif (jZ[1][0] == location5) and (jZ[1][1] == hadron5) and (jZ[1][2] == h2):
+                            recN2 = [location5, hadron5, h1]
+                        #H6_B
+                        elif (jZ[1][0] == location6) and (jZ[1][1] == hadron6) and (jZ[1][2] == Yu1):
+                            recN2 = [location6, hadron6, Yu2]
+                        elif (jZ[1][0] == location6) and (jZ[1][1] == hadron6) and (jZ[1][2] == Yu2):
+                            recN2 = [location6, hadron6, Yu1]
+                        else:
+                            recN2 = jZ[1]
+                        re_construct.append([recN1, recN2])
+                    if Simplified_Result0[jY][1] != 0 and Simplified_Result0[jX][1] != 0 and set(to_tuple(re_construct)) == set(to_tuple(Simplified_Result0[jX][0])):
+                        Simplified_Result0[jX][0] = copy.deepcopy(Simplified_Result0[jY][0])
+                        Simplified_Result0[jX][1] = Simplified_Result0[jY][1] + relativ_sign * Simplified_Result0[jX][1]
+                        Simplified_Result0[jY][1] = 0
+        Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
+        return Simplified_Result
+
+FBList = ['d', 'o', 's', 'x', 'n']
+SBList = ['l']
+#Simplify one particle at Sink or at the Source
+def HZ1(lc, Lu_LIST, i, result_to_simplify_F, ReNu): 
+    relativ_sign = None
+    if Lu_LIST[i][0] in FBList:
+        relativ_sign = -1
+    if Lu_LIST[i][0] in SBList:
+        relativ_sign = 1
+    if relativ_sign != None:
+        HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+#Simplify one particle at Sink and one at the Source
+def HZ11(Lu_LIST1, Lu_LIST2, i, j, result_to_simplify_F, ReNu): 
+    relativ_sign = None
+    if (Lu_LIST1[i][0] in FBList) and (Lu_LIST2[j][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i][0] in SBList) and (Lu_LIST2[j][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i][0] in FBList) and (Lu_LIST2[j][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i][0] in SBList) and (Lu_LIST2[j][0] in SBList):
+        relativ_sign = 1
+    if relativ_sign != None:
+        HQ_List = [[1, Lu_LIST1[i][1], [0 , 1]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+#Simplify two particles at Sink or at the Source
+def HZ2(lc, Lu_LIST, i, j, result_to_simplify_F, ReNu):
+    relativ_sign = None
+    if (Lu_LIST[i][0] in FBList) and (Lu_LIST[j][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST[i][0] in FBList) and (Lu_LIST[j][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST[i][0] in SBList) and (Lu_LIST[j][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST[i][0] in SBList) and (Lu_LIST[j][0] in SBList):
+        relativ_sign = 1
+    if relativ_sign != None:
+        HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 1]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+
+#Simplify two particles at Sink and one on the source or at two particles at Source and one on the Sink
+def HZJ1(lc1, lc2, Lu_LIST1, Lu_LIST2, i1, i2, j, result_to_simplify_F, ReNu1, ReNu2):
+    relativ_sign = None
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in SBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in SBList):
+        relativ_sign = 1
+    if relativ_sign != None:
+        HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 1]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+
+#Simplify two particles at Sink and two particles at Source
+def HZJ2(Lu_LIST1, Lu_LIST2, i1, i2, j1, j2, result_to_simplify_F, ReNu):
+    relativ_sign = None
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = 1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = -1
+    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
+        relativ_sign = 1
+    if relativ_sign != None:
+        HQ_List = [[1, Lu_LIST1[i1][1], [0 , 1]], [1, Lu_LIST1[i2][1], [0 , 1]], [0, np.abs(Lu_LIST2[j1][1]-ReNu), [0 , 1]], [0, np.abs(Lu_LIST2[j2][1]-ReNu), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+
+def KAIDO(Hadrons_Sink, Hadrons_Source, result_to_simplify_F):
+    Simplified_Result0 = copy.deepcopy(result_to_simplify_F)
+    lsO = len(Hadrons_Source) - 1
+    KaidoSi = []
+    for i in Hadrons_Sink:
+        if i[0] in listbaryon:
+            KaidoSi.append(i)
+    KaidoSo = []
+    for i in Hadrons_Source:
+        if i[0] in listbaryon:
+            KaidoSo.append(i)
+    if (len(KaidoSi) == len(KaidoSo)) and (len(KaidoSo) > 0):
+        if len(KaidoSi) == 1:
+            Simplified_Result0 = copy.deepcopy(HZ1(1, KaidoSi, 0, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ1(0, KaidoSo, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 0, 0, Simplified_Result0, lsO))
+        if len(KaidoSi) == 2:
+            Simplified_Result0 = copy.deepcopy(HZ1(1, KaidoSi, 0, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ1(1, KaidoSi, 1, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ1(0, KaidoSo, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ1(0, KaidoSo, 1, Simplified_Result0, lsO))
+            #One particle at Sink and one at the Source
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 0, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 1, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 1, 1, Simplified_Result0, lsO))
+            # (Two at Source and then two at Sink)
+            Simplified_Result0 = copy.deepcopy(HZ2(0, KaidoSo, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ2(1, KaidoSi, 0, 1, Simplified_Result0, 0))
+            # (Two at Source and one on the sink, then Two at the Sink and one on the source, all possible)
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 1, 0, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 1, 1, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 1, 0, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 1, 1, Simplified_Result0, lsO, 0))
+            # (Two at Source Two at the Sink)
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 1, 0, 1, Simplified_Result0, lsO))
+    return Simplified_Result0
+def Sim_TL(F_S_S_L, F_S_So_L, result_to_simplify_F):
+    zX = 0
+    for i, iL in enumerate(F_S_S_L):
+        for j, jL in enumerate(F_S_S_L):
+            if (i != j) and (iL != jL):
+                zX = -1
+    zX1 = 0
+    for i, iL in enumerate(F_S_So_L):
+        for j, jL in enumerate(F_S_So_L):
+            if (i != j) and (iL != jL):
+                zX1 = -1
+    Hadrons_Sink = F_S_S_L[0]
+    Hadrons_Source = F_S_So_L[0]
+    if (zX == 0) and (zX1 == 0):
+        result_to_simplify_F = copy.deepcopy(KAIDO(Hadrons_Sink, Hadrons_Source, result_to_simplify_F))
+        return result_to_simplify_F
+
+
+
+
 ########################################################
 
 
@@ -10113,6 +10734,17 @@ def Wick_Contractions(senken0, quelle0):
     Converted_Results_Final = [item for item in Converted_Results_Final0 if item != [0, 0]]
                     
     result_to_simplify_F = copy.deepcopy(Converted_Results_Final)
+
+    # Now we do the last simplification (Lambda0, Sigma0):
+    #I: At the sink:######################################################################### 
+    zX = 0
+    for i, iL in enumerate(F_S_S_L):
+        for j, jL in enumerate(F_S_S_L):
+            if (i != j) and (iL != jL):
+                zX = -1
+    if zX == 0:
+        location = 1
+        sp0 = F_S_S_L[0]
     '''
     # Now we do the last simplification (identical hadrons):
     #I: At the sink:######################################################################### 
@@ -10154,7 +10786,7 @@ def Wick_Contractions(senken0, quelle0):
                 result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
             #12
             if sp0[1][0] == sp0[2][0]:
-                if sp0[1][0] in listbaryon:
+                if sp0[0][0] in listbaryon:
                     relativ_sign = -1
                 else:
                     relativ_sign = 1
@@ -10201,7 +10833,7 @@ def Wick_Contractions(senken0, quelle0):
                 result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
             #12
             if sp0[1][0] == sp0[2][0]:
-                if sp0[1][0] in listbaryon:
+                if sp0[0][0] in listbaryon:
                     relativ_sign = -1
                 else:
                     relativ_sign = 1
@@ -10209,7 +10841,9 @@ def Wick_Contractions(senken0, quelle0):
                 hadron2 = np.abs(tB-sp0[2][1])
                 result_to_simplify_F = copy.deepcopy(Sim_F(location, hadron1, hadron2, result_to_simplify_F, relativ_sign))
     '''
+    result_to_simplify_F = Sim_TL(F_S_S_L, F_S_So_L, result_to_simplify_F)
     return result_to_simplify_F
+
 
 
 def Simplify_Overall(resultH, x):
@@ -10383,8 +11017,22 @@ def Wick_Contractions_Symbolic(senken0, quelle0):
 #two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')
 #Sink = [three_hadron_operator([1, 1, 3/2], 5/2, 5/2, 1, 'Pi', 'Pi', 'Delta')]
 #Source = [three_hadron_operatorB([1, 1, 3/2], 5/2, 5/2, 1, 'Pi', 'Pi', 'Delta')]
-Sink = [Lambda0, Lambda0]
-Source = [Lambda0B, Lambda0B]
+#Sink = [Lambda0, Lambda0]
+#Source = [Lambda0B, Lambda0B]
+#result = Wick_Contractions(Sink, Source)
+#for i, x in enumerate(result):
+#    print(f"D.Nr:{i + 1} ", x[0], x[1])
+
+
+#Sink = [Lambda0, Lambda0]
+#Source = [Lambda0B, Lambda0B]
+#Sink = [Nucleonp]
+#Source = [NucleonpB]
+#Sink = [Pip, Pip]
+#Source = [PipB, PipB]
+Sink = [two_hadron_operator([1, 1], 0, 0, 'Sigma', 'Sigma')]
+Source = [two_hadron_operatorB([1, 1], 0, 0, 'Sigma', 'Sigma')]
 result = Wick_Contractions(Sink, Source)
-for i, x in enumerate(result):
+simplified_result = Simplify_Overall(result, 1)
+for i, x in enumerate(simplified_result):
     print(f"D.Nr:{i + 1} ", x[0], x[1])
