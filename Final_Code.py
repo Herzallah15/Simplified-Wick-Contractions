@@ -10215,114 +10215,198 @@ def Sim_KD(HQ_List, result_to_simplify_F, relativ_sign):
                         Simplified_Result0[jY][1] = 0
         Simplified_Result = [item for item in Simplified_Result0 if item[1] != 0]
         return Simplified_Result
-
 FBList = ['d', 'o', 's', 'x', 'n']
 SBList = ['l']
+def Relativesign_Finder(erste_liste, zweite_liste):
+    Vorzeichen = 1
+    lA1 = len(erste_liste)
+    if isinstance(zweite_liste, list):
+        lA2 = len(zweite_liste)
+        for iH in range(lA1):
+            if erste_liste[iH][0] in FBList:
+                Vorzeichen *= -1
+            if erste_liste[iH][0] in SBList:
+                Vorzeichen *= 1
+        for iY in range(lA2):
+            if zweite_liste[iY][0] in FBList:
+                Vorzeichen *= -1
+            if zweite_liste[iY][0] in SBList:
+                Vorzeichen *= 1
+    else:
+        for iH in range(lA1):
+            if erste_liste[iH][0] in FBList:
+                Vorzeichen *= -1
+            if erste_liste[iH][0] in SBList:
+                Vorzeichen *= 1
+    return Vorzeichen
+
+
+
+DOL = ['d', 'o']     
+
 #Simplify one particle at Sink or at the Source
 def HZ1(lc, Lu_LIST, i, result_to_simplify_F, ReNu): 
     relativ_sign = None
-    if Lu_LIST[i][0] in FBList:
-        relativ_sign = -1
-    if Lu_LIST[i][0] in SBList:
-        relativ_sign = 1
+    relativ_sign = Relativesign_Finder(Lu_LIST, 0)
     if relativ_sign != None:
         HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 1]]]
         result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
+        if Lu_LIST[i][0] in DOL:
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
         return result_to_simplify_F
+
+
+
 #Simplify one particle at Sink and one at the Source
 def HZ11(Lu_LIST1, Lu_LIST2, i, j, result_to_simplify_F, ReNu): 
     relativ_sign = None
-    if (Lu_LIST1[i][0] in FBList) and (Lu_LIST2[j][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i][0] in SBList) and (Lu_LIST2[j][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i][0] in FBList) and (Lu_LIST2[j][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i][0] in SBList) and (Lu_LIST2[j][0] in SBList):
-        relativ_sign = 1
+    relativ_sign = Relativesign_Finder(Lu_LIST1, Lu_LIST2)
     if relativ_sign != None:
         HQ_List = [[1, Lu_LIST1[i][1], [0 , 1]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [0 , 1]]]
         result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
+        if (Lu_LIST1[i][0] in DOL) and (Lu_LIST2[j][0] in DOL):
+            HQ_List = [[1, Lu_LIST1[i][1], [0 , 2]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i][1], [1 , 2]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i][1], [0 , 2]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i][1], [1 , 2]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i][1], [0 , 2]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i][1], [1 , 2]], [0, np.abs(Lu_LIST2[j][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
         return result_to_simplify_F
+
+
+
 #Simplify two particles at Sink or at the Source
 def HZ2(lc, Lu_LIST, i, j, result_to_simplify_F, ReNu):
     relativ_sign = None
-    if (Lu_LIST[i][0] in FBList) and (Lu_LIST[j][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST[i][0] in FBList) and (Lu_LIST[j][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST[i][0] in SBList) and (Lu_LIST[j][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST[i][0] in SBList) and (Lu_LIST[j][0] in SBList):
-        relativ_sign = 1
+    relativ_sign = Relativesign_Finder(Lu_LIST, 0)
     if relativ_sign != None:
         HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 1]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [0 , 1]]]
         result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
+
+        if (Lu_LIST[i][0] in DOL) and (Lu_LIST[j][0] in DOL):
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 2]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [1 , 2]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 2]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [1 , 2]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [0 , 2]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc, np.abs(Lu_LIST[i][1]-ReNu), [1 , 2]], [lc, np.abs(Lu_LIST[j][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
         return result_to_simplify_F
+
+
+
 
 #Simplify two particles at Sink and one on the source or at two particles at Source and one on the Sink
 def HZJ1(lc1, lc2, Lu_LIST1, Lu_LIST2, i1, i2, j, result_to_simplify_F, ReNu1, ReNu2):
     relativ_sign = None
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in SBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j][0] in SBList):
-        relativ_sign = 1
+    relativ_sign = Relativesign_Finder(Lu_LIST1, Lu_LIST2)
     if relativ_sign != None:
         HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 1]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
         result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
+        if (Lu_LIST1[i1][0] in DOL) and (Lu_LIST1[i2][0] in DOL) and (Lu_LIST2[j][0] in DOL):
+            HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 2]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 1]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [1 , 2]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 1]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+
+            HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 2]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [1 , 2]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+
+            HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 2]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 2]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [1 , 2]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [1 , 2]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
         return result_to_simplify_F
+
+
+
+
+
 
 #Simplify two particles at Sink and two particles at Source
 def HZJ2(Lu_LIST1, Lu_LIST2, i1, i2, j1, j2, result_to_simplify_F, ReNu):
     relativ_sign = None
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in FBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in FBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = 1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in FBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in FBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = -1
-    if (Lu_LIST1[i1][0] in SBList) and (Lu_LIST1[i2][0] in SBList) and (Lu_LIST2[j1][0] in SBList) and (Lu_LIST2[j2][0] in SBList):
-        relativ_sign = 1
+    relativ_sign = Relativesign_Finder(Lu_LIST1, Lu_LIST2)
     if relativ_sign != None:
         HQ_List = [[1, Lu_LIST1[i1][1], [0 , 1]], [1, Lu_LIST1[i2][1], [0 , 1]], [0, np.abs(Lu_LIST2[j1][1]-ReNu), [0 , 1]], [0, np.abs(Lu_LIST2[j2][1]-ReNu), [0 , 1]]]
         result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
+        if (Lu_LIST1[i1][0] in DOL) and (Lu_LIST1[i2][0] in DOL) and (Lu_LIST2[j1][0] in DOL) and (Lu_LIST2[j2][0] in DOL):
+            HQ_List = [[1, Lu_LIST1[i1][1], [0 , 2]], [1, Lu_LIST1[i2][1], [0 , 2]], [0, np.abs(Lu_LIST2[j1][1]-ReNu), [0 , 2]], [0, np.abs(Lu_LIST2[j2][1]-ReNu), [0 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i1][1], [1 , 2]], [1, Lu_LIST1[i2][1], [1 , 2]], [0, np.abs(Lu_LIST2[j1][1]-ReNu), [1 , 2]], [0, np.abs(Lu_LIST2[j2][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+            HQ_List = [[1, Lu_LIST1[i1][1], [0 , 1]], [1, Lu_LIST1[i2][1], [0 , 2]], [0, np.abs(Lu_LIST2[j1][1]-ReNu), [1 , 2]], [0, np.abs(Lu_LIST2[j2][1]-ReNu), [1 , 2]]]
+            result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        '''
         return result_to_simplify_F
+
+
+
+
+
+
+#Simplify Three particles at Sink and one on the source (Or other awy around)
+def KMB31(lc1, lc2, Lu_LIST1, Lu_LIST2, i1, i2, i3, j, result_to_simplify_F, ReNu1, ReNu2):
+    relativ_sign = None
+    relativ_sign = Relativesign_Finder(Lu_LIST1, Lu_LIST2)
+    if relativ_sign != None:
+        HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i3][1]-ReNu1), [0 , 1]], [lc2, np.abs(Lu_LIST2[j][1]-ReNu2), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+
+
+
+
+
+#Simplify Three particles at Sink and two on the source (Or other awy around)
+def KMB32(lc1, lc2, Lu_LIST1, Lu_LIST2, i1, i2, i3, j1, j2, result_to_simplify_F, ReNu1, ReNu2):
+    relativ_sign = None
+    relativ_sign = Relativesign_Finder(Lu_LIST1, Lu_LIST2)
+    if relativ_sign != None:
+        HQ_List = [[lc1, np.abs(Lu_LIST1[i1][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i2][1]-ReNu1), [0 , 1]], [lc1, np.abs(Lu_LIST1[i3][1]-ReNu1), [0 , 1]], [lc2, np.abs(Lu_LIST2[j1][1]-ReNu2), [0 , 1]], [lc2, np.abs(Lu_LIST2[j2][1]-ReNu2), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+
+
+
+
+
+#Simplify Three particles at Sink and Three on the source
+def KMB33(Lu_LIST1, Lu_LIST2, i1, i2, i3, j1, j2, j3, result_to_simplify_F, ReNu):
+    relativ_sign = None
+    relativ_sign = Relativesign_Finder(Lu_LIST1, Lu_LIST2)
+    if relativ_sign != None:
+        HQ_List = [[1, Lu_LIST1[i1][1], [0 , 1]], [1, Lu_LIST1[i2][1], [0 , 1]], [1, Lu_LIST1[i3][1], [0 , 1]], [0, np.abs(Lu_LIST2[j1][1]-ReNu), [0 , 1]], [0, np.abs(Lu_LIST2[j2][1]-ReNu), [0 , 1]], [0, np.abs(Lu_LIST2[j3][1]-ReNu), [0 , 1]]]
+        result_to_simplify_F = copy.deepcopy(Sim_KD(HQ_List, result_to_simplify_F, relativ_sign))
+        return result_to_simplify_F
+
 
 def KAIDO(Hadrons_Sink, Hadrons_Source, result_to_simplify_F):
     Simplified_Result0 = copy.deepcopy(result_to_simplify_F)
@@ -10360,7 +10444,77 @@ def KAIDO(Hadrons_Sink, Hadrons_Source, result_to_simplify_F):
             Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 1, 1, Simplified_Result0, lsO, 0))
             # (Two at Source Two at the Sink)
             Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 1, 0, 1, Simplified_Result0, lsO))
+        if len(KaidoSi) == 3:
+            Simplified_Result0 = copy.deepcopy(HZ1(1, KaidoSi, 0, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ1(1, KaidoSi, 1, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ1(1, KaidoSi, 2, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ1(0, KaidoSo, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ1(0, KaidoSo, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ1(0, KaidoSo, 2, Simplified_Result0, lsO))
+            #One particle at Sink and one at the Source
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 0, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 0, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 1, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 1, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 1, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 2, 0, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 2, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ11(KaidoSi, KaidoSo, 2, 2, Simplified_Result0, lsO))
+            # (Two at Source and then two at Sink)
+            Simplified_Result0 = copy.deepcopy(HZ2(0, KaidoSo, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ2(0, KaidoSo, 0, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ2(0, KaidoSo, 1, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZ2(1, KaidoSi, 0, 1, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ2(1, KaidoSi, 0, 2, Simplified_Result0, 0))
+            Simplified_Result0 = copy.deepcopy(HZ2(1, KaidoSi, 1, 2, Simplified_Result0, 0))
+            # (Two at Source and one on the sink, then Two at the Sink and one on the source, all possible)
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 1, 0, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 1, 1, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 1, 2, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 2, 0, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 2, 1, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 0, 2, 2, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 1, 2, 0, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 1, 2, 1, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(1, 0, KaidoSi, KaidoSo, 1, 2, 2, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 1, 0, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 1, 1, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 1, 2, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 2, 0, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 2, 1, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 0, 2, 2, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 1, 2, 0, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 1, 2, 1, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(HZJ1(0, 1, KaidoSo, KaidoSi, 1, 2, 2, Simplified_Result0, lsO, 0))
+            # (Two at Source Two at the Sink)
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 1, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 2, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 1, 2, 0, 1, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 1, 0, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 2, 0, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 1, 2, 0, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 1, 1, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 0, 2, 1, 2, Simplified_Result0, lsO))
+            Simplified_Result0 = copy.deepcopy(HZJ2(KaidoSi, KaidoSo, 1, 2, 1, 2, Simplified_Result0, lsO))
+            # (Three at Source and one on the sink, then other way)
+            Simplified_Result0 = copy.deepcopy(KMB31(1, 0, KaidoSi, KaidoSo, 0, 1, 2, 0, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(KMB31(1, 0, KaidoSi, KaidoSo, 0, 1, 2, 1, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(KMB31(1, 0, KaidoSi, KaidoSo, 0, 1, 2, 2, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(KMB31(0, 1, KaidoSo, KaidoSi, 0, 1, 2, 0, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(KMB31(0, 1, KaidoSo, KaidoSi, 0, 1, 2, 1, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(KMB31(0, 1, KaidoSo, KaidoSi, 0, 1, 2, 2, Simplified_Result0, lsO, 0))
+            # (Three at Source and two on the sink, then other way)
+            Simplified_Result0 = copy.deepcopy(KMB32(1, 0, KaidoSi, KaidoSo, 0, 1, 2, 0, 1, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(KMB32(1, 0, KaidoSi, KaidoSo, 0, 1, 2, 0, 2, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(KMB32(1, 0, KaidoSi, KaidoSo, 0, 1, 2, 1, 2, Simplified_Result0, 0, lsO))
+            Simplified_Result0 = copy.deepcopy(KMB32(0, 1, KaidoSo, KaidoSi, 0, 1, 2, 0, 1, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(KMB32(0, 1, KaidoSo, KaidoSi, 0, 1, 2, 0, 2, Simplified_Result0, lsO, 0))
+            Simplified_Result0 = copy.deepcopy(KMB32(0, 1, KaidoSo, KaidoSi, 0, 1, 2, 1, 2, Simplified_Result0, lsO, 0))
+            #(Three at Sink and three on the source)
+            Simplified_Result0 = copy.deepcopy(KMB33(KaidoSi, KaidoSo, 0, 1, 2, 0, 1, 2, Simplified_Result0, lsO))
     return Simplified_Result0
+
 def Sim_TL(F_S_S_L, F_S_So_L, result_to_simplify_F):
     zX = 0
     for i, iL in enumerate(F_S_S_L):
