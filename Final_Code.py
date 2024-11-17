@@ -10,6 +10,9 @@ import sympy as sp
 import copy
 from itertools import chain
 import re
+import matplotlib.patches as patches
+from matplotlib.patches import Arc
+from matplotlib.patches import FancyArrowPatch
 
 Deltapp = [1, [1, 1, 1], "d2"]
 DeltappB = [1, [1.2, 1.2, 1.2], "d2"]
@@ -10899,6 +10902,142 @@ def Simplify_Overall(resultH, x):
     resultHNew = [[i[0], i[1] / x] for i in resultH]
     return resultHNew
 
+
+
+
+
+########################################################
+
+
+##
+########################################################
+#7.1: Code for making Plots
+
+
+
+def plot_hadron_contraction(hadron_data): 
+    sink_P = {}
+    source_P = {}
+    Type_Of_Hadrons = []
+    for contraction_pair in hadron_data:
+        if (contraction_pair[0][0] == 1) and (contraction_pair[0][1] not in sink_P):
+            sink_P[contraction_pair[0][1]] = []
+        if (contraction_pair[0][0] == 0) and (contraction_pair[0][1] not in source_P):
+            source_P[contraction_pair[0][1]] = []
+        if (contraction_pair[1][0] == 1) and (contraction_pair[1][1] not in sink_P):
+            sink_P[contraction_pair[1][1]] = []
+        if (contraction_pair[1][0] == 0) and (contraction_pair[1][1] not in source_P):
+            source_P[contraction_pair[1][1]] = []
+    for contraction_pair in hadron_data:
+        if (contraction_pair[0][0] == 1):
+            sink_P[contraction_pair[0][1]].append(contraction_pair[0][2])
+        if (contraction_pair[0][0] == 0):
+            source_P[contraction_pair[0][1]].append(contraction_pair[0][2])
+        if (contraction_pair[1][0] == 1):
+            sink_P[contraction_pair[1][1]].append(contraction_pair[1][2])
+        if (contraction_pair[1][0] == 0):
+            source_P[contraction_pair[1][1]].append(contraction_pair[1][2])
+
+    for i in sink_P:
+        sink_P[i].sort()
+    for i in source_P:
+        source_P[i].sort()
+
+    if len(sink_P) >= 0 and len(source_P) >= 0:
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.text(0.2, 3.5, 'Sink', fontsize=12)
+        ax.text(5.3, 3.5, 'Source', fontsize=12)
+        sink_positions = {}
+        source_positions = {}
+        #unten_zeiger = 0
+        leS = len(source_P)-1
+        for i in sink_P:
+            if i == 1:
+                sink_positions[i] = (1, 2-4 * 1)
+            elif i == 2:
+                sink_positions[i] = (1, 2-4 * 2)
+            elif i == 3:
+                sink_positions[i] = (1, 2-4 * 3)
+            elif i == 4:
+                sink_positions[i] = (1, 2-4 * 4)
+            elif i == 5:
+                sink_positions[i] = (1, 2-4 * 5)
+            elif i == 6:
+                sink_positions[i] = (1, 2-4 * 6)
+            else:
+                sink_positions[i] = (1, 2-4 * 0)
+            #sink_positions[i] = (1, 2-4 * unten_zeiger)
+            #unten_zeiger += 1
+        #unten_zeiger = 0
+        for i in source_P:
+            if i == 1:
+                source_positions[i] = (5, 2-4 * (leS - 1))
+            elif i == 2:
+                source_positions[i] = (5, 2-4 * (leS - 2))
+            elif i == 3:
+                source_positions[i] = (5, 2-4 * (leS - 3))
+            elif i == 4:
+                source_positions[i] = (5, 2-4 * (leS - 4))
+            elif i == 5:
+                source_positions[i] = (5, 2-4 * (leS - 5))
+            elif i == 6:
+                source_positions[i] = (5, 2-4 * (leS - 6))
+            else:
+                source_positions[i] = (5, 2-4 * leS)
+            #unten_zeiger += 1
+        sink_coordinates = {}
+        source_coordinates = {}
+        for hadron, (x, y) in sink_positions.items():
+            circle = patches.Circle((x, y), 0.7, edgecolor="black", facecolor="lightgray", linewidth=1)
+            ax.add_patch(circle)
+            ax.text(x, y + 1.0, hadron, ha="center", va="center", fontsize=10, fontweight="bold")
+            sink_coordinates[hadron] = []
+            if len(sink_P[hadron]) == 3:
+                for i in range(3):
+                    quark_x, quark_y = x, y - i * 0.5 + 0.5
+                    ax.text(quark_x, quark_y, f"{i}", ha="center", va="center", fontsize=10, color="black")
+                    sink_coordinates[hadron].append((quark_x, quark_y))
+            if len(sink_P[hadron]) == 2:
+                for i in range(2):
+                    quark_x, quark_y = x, y - i * 0.7 + 0.2
+                    ax.text(quark_x, quark_y, f"{i}", ha="center", va="center", fontsize=10, color="black")
+                    sink_coordinates[hadron].append((quark_x, quark_y))
+        for hadron, (x, y) in source_positions.items():
+            circle = patches.Circle((x, y), 0.7, edgecolor="black", facecolor="lightgray", linewidth=1)
+            ax.add_patch(circle)
+            ax.text(x, y + 1.0, hadron, ha="center", va="center", fontsize=10, fontweight="bold")
+            source_coordinates[hadron] = []
+            if len(source_P[hadron]) == 3:
+                for i in range(3):
+                    quark_x, quark_y = x, y - i * 0.5 + 0.5
+                    ax.text(quark_x, quark_y, f"{i}", ha="center", va="center", fontsize=10, color="black")
+                    source_coordinates[hadron].append((quark_x, quark_y))
+            if len(source_P[hadron]) == 2:
+                for i in range(2):
+                    quark_x, quark_y = x, y - i * 0.7 + 0.2
+                    ax.text(quark_x, quark_y, f"{i}", ha="center", va="center", fontsize=10, color="black")
+                    source_coordinates[hadron].append((quark_x, quark_y))
+        All_Quark_Coordinate = {0: [], 1: []}
+        All_Quark_Coordinate[0] = source_coordinates
+        All_Quark_Coordinate[1] = sink_coordinates
+        for (hadron1, hadron2) in hadron_data:
+            xyFinal = (All_Quark_Coordinate[hadron1[0]][hadron1[1]][hadron1[2]][0]+0.05, All_Quark_Coordinate[hadron1[0]][hadron1[1]][hadron1[2]][1])
+            xyInitial = (All_Quark_Coordinate[hadron2[0]][hadron2[1]][hadron2[2]][0]-0.05, All_Quark_Coordinate[hadron2[0]][hadron2[1]][hadron2[2]][1])
+            if hadron1[0] != hadron2[0]:
+                plt.annotate("",xy = xyFinal, xytext = xyInitial ,arrowprops=dict(arrowstyle="->", lw=2))
+            if hadron1[0] == hadron2[0]:
+                arrow = FancyArrowPatch(xyInitial, xyFinal,connectionstyle="arc3,rad=0.5",arrowstyle="->",lw=2, mutation_scale=15)
+                ax.add_patch(arrow)
+                #plt.annotate("",xy = xyFinal, xytext = xyInitial ,arrowprops=dict(arrowstyle="->", lw=2))
+        ax.set_xlim(0, 6)
+        ax.set_ylim(-8, 4)
+        ax.axis('off')  # Achsen ausschalten
+        plt.title("Hadron Contraction Diagram")
+        plt.show()
+
+
+
+
 ########################################################
 
 
@@ -11085,3 +11224,8 @@ result = Wick_Contractions(Sink, Source)
 simplified_result = Simplify_Overall(result, 1)
 for i, x in enumerate(simplified_result):
     print(f"D.Nr:{i + 1} ", x[0], x[1])
+
+#Now lets us visualize the diagrams appearing in result1: 
+for i, x in enumerate(result):
+    print(f"D.Nr:{i + 1}: ", "Overall factor: ", x[1])
+    plot_hadron_contraction(x[0])
