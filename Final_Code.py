@@ -10684,6 +10684,69 @@ def Correlator_S(Sink, Source):
     return last_step
 
 
+
+########################################################
+
+
+##
+########################################################
+#6.1: Checking the Input
+
+def check_input(full_input):
+    g0 = len(full_input)
+    ubFaktor = 0
+    errors = []
+    for i in range(g0):
+        hadron_input = full_input[i]
+        if isinstance(hadron_input[0], list):
+            g1 = len(hadron_input)
+            for j in range(g1):
+                hadron_Super_input = hadron_input[j]
+                if not isinstance(hadron_Super_input[0], list):
+                    if (isinstance(hadron_Super_input[1], list)) and (len(hadron_Super_input) == 3):
+                        if isinstance(hadron_Super_input[2], list):
+                            for z in hadron_Super_input[2]:
+                                if not isinstance(z, str):
+                                    ubFaktor = 1
+                                    errors.append(z)
+                        else:
+                            if not isinstance(hadron_Super_input[2], str):
+                                ubFaktor = 1
+                                errors.append(hadron_Super_input[2])
+                    else:
+                        ubFaktor = 1
+                        errors.append(hadron_Super_input)
+                else:
+                    ubFaktor = 1
+                    errors.append(hadron_Super_input[0])
+                    
+                        
+        else:
+            if (isinstance(hadron_input[1], list)) and (len(hadron_input) == 3):
+                if isinstance(hadron_input[2], list):
+                    for z in hadron_input[2]:
+                        if not isinstance(z, str):
+                            ubFaktor = 1
+                            errors.append(z)
+                        else:
+                            if not isinstance(hadron_input[2], str):
+                                ubFaktor = 1
+                                errors.append(hadron_input[2])
+            else:
+                ubFaktor = 1
+                errors.append(hadron_input)
+    if ubFaktor == 0:
+        return full_input
+    else:
+        print("There is a Typo in the input, check the  in the Input!")
+        print("The error/s in ", full_input)
+        print("is/are in :")
+        for iE in errors:
+            print(iE)
+
+
+
+
 ########################################################
 
 
@@ -10691,6 +10754,8 @@ def Correlator_S(Sink, Source):
 ########################################################
 #6: Code Part II
 def Wick_Contractions(senken0, quelle0):
+    senken0 = check_input(senken0)
+    quelle0 = check_input(quelle0)
     ###
     def hadron_multiplication(hadrons):
         elements = []
