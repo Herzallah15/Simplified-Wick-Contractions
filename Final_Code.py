@@ -10728,10 +10728,10 @@ def check_input(full_input):
                         if not isinstance(z, str):
                             ubFaktor = 1
                             errors.append(z)
-                        else:
-                            if not isinstance(hadron_input[2], str):
-                                ubFaktor = 1
-                                errors.append(hadron_input[2])
+                else:
+                    if not isinstance(hadron_input[2], str):
+                        ubFaktor = 1
+                        errors.append(hadron_input[2])
             else:
                 ubFaktor = 1
                 errors.append(hadron_input)
